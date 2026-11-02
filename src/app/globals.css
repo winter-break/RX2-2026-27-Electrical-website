@@ -46,3 +46,81 @@ html, body {
   max-width: 60ch;
   margin: 0;
 }
+
+/* ---------- Password page (designed on a 1920x1080 canvas, sized in vw) ---------- */
+.gate {
+  position: relative;
+  width: 100vw;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #000;
+  --u: calc(100vw / 1920);
+}
+
+.gate-glow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+}
+
+.gate-tiger {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  mix-blend-mode: screen;
+}
+
+.gate-logo {
+  position: absolute;
+  left: calc(var(--u) * 318);
+  top: calc(var(--u) * 340);
+  width: calc(var(--u) * 1097);
+  mix-blend-mode: screen;
+}
+
+.gate-bar {
+  position: absolute;
+  left: calc(var(--u) * 375);
+  top: calc(var(--u) * 722);
+  display: flex;
+  align-items: flex-end;
+  gap: calc(var(--u) * 18);
+}
+
+.gate-bar label {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: calc(var(--u) * 56);
+  line-height: 1;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.gate-bar input {
+  width: calc(var(--u) * 412);
+  height: calc(var(--u) * 62);
+  background: transparent;
+  border: 0;
+  border-bottom: calc(var(--u) * 3) solid #fff;
+  outline: 0;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  font-size: calc(var(--u) * 40);
+  letter-spacing: 0.15em;
+  padding: 0 calc(var(--u) * 6);
+}
+
+.gate-error {
+  position: absolute;
+  left: calc(var(--u) * 750);
+  top: calc(var(--u) * 800);
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: calc(var(--u) * 28);
+  color: #ff4fa3;
+}
