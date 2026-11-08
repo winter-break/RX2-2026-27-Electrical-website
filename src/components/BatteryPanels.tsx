@@ -17,6 +17,7 @@ export default function BatteryPanels() {
     Object.fromEntries(PANELS.map((p) => [p.id, p.open])),
   );
   return (
+    <div className="bp-scroll">
     <div className="bp">
       {PANELS.map((p) => (
         <section key={p.id} className={`pn pn-${p.side} pn-r${p.row}`}>
@@ -40,6 +41,7 @@ export default function BatteryPanels() {
           )}
         </section>
       ))}
+    </div>
     </div>
   );
 }

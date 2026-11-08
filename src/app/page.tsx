@@ -9,6 +9,7 @@ export default async function PasswordPage({
 
   return (
     <main className="gate">
+      <div className="gate-stage">
       <img className="gate-glow" src="/glow.png" alt="" />
       <img className="gate-tiger" src="/tiger.png" alt="" />
       <img className="gate-logo" src="/logo.png" alt="Racer X²" />
@@ -17,6 +18,7 @@ export default async function PasswordPage({
         <input id="pw" name="password" type="password" autoFocus required />
       </form>
       {error && <p className="gate-error">Incorrect password</p>}
+      </div>
     </main>
   );
 }

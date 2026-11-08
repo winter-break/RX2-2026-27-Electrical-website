@@ -12,6 +12,7 @@ export default function Header() {
       <div className="hdr-checker" />
       <div className="hdr-line1" />
       <div className="hdr-line2" />
+      <div className="hdr-in">
       <Link href="/overview" className="hdr-gear" aria-label="Overview">
         <img src="/gear.png" alt="RX²" />
       </Link>
@@ -26,6 +27,7 @@ export default function Header() {
           );
         })}
       </nav>
+      </div>
     </header>
   );
 }

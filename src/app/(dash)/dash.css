@@ -1,18 +1,24 @@
 /* Dashboard pages. Sizes come from a 1920x1080 design: "N * var(--u)" = N design pixels. */
-body:has(.dash) { background: #161515; }
+html:has(.dash), body:has(.dash) { overflow: hidden; height: 100%; background: #161515; }
 
+/* The design is 1920 x 1100 units. --u = size of one unit, chosen so the whole design fits the window
+   (width AND height). The page never scrolls; it is centered when the window is not the same shape. */
 .dash {
-  --u: calc(100vw / 1920);
-  position: relative;
-  width: 100vw;
-  min-height: 100vh;
-  overflow-x: hidden;
+  --u: min(calc(100vw / 1920), calc(100vh / 1100));
+  --ox: calc((100vw - var(--u) * 1920) / 2);
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
   background: #161515;
   color: #fff;
   font-family: "Poppins", sans-serif;
   font-style: italic;
   font-weight: 700;
 }
+@supports (height: 100dvh) {
+  .dash { --u: min(calc(100vw / 1920), calc(100dvh / 1100)); }
+}
+.stage { position: absolute; left: var(--ox); top: 0; width: calc(var(--u) * 1920); height: calc(var(--u) * 1100); }
 .dash :where(a) { color: inherit; text-decoration: none; }
 .dash :where(button) { font: inherit; color: inherit; }
 
@@ -28,6 +34,7 @@ body:has(.dash) { background: #161515; }
 }
 .hdr-line1 { position: absolute; left: 0; right: 0; top: calc(var(--u) * 108); height: calc(var(--u) * 2); background: #b94d8f; }
 .hdr-line2 { position: absolute; left: 0; right: 0; top: calc(var(--u) * 110); height: calc(var(--u) * 2); background: #442537; }
+.hdr-in { position: absolute; left: var(--ox); top: 0; width: calc(var(--u) * 1920); height: 100%; }
 .hdr-gear { position: absolute; left: calc(var(--u) * 8); top: calc(var(--u) * 2); width: calc(var(--u) * 108); height: calc(var(--u) * 102); }
 .hdr-gear img { width: 100%; height: 100%; display: block; }
 
@@ -47,7 +54,7 @@ body:has(.dash) { background: #161515; }
 .tab.is-active { background: #ff47a8; color: #dcdcdc; font-size: calc(var(--u) * 42); }
 
 /* ---------- overview ---------- */
-.ov { position: relative; width: 100%; height: calc(var(--u) * 1150); }
+.ov { position: absolute; inset: 0; }
 .card {
   position: absolute; box-sizing: border-box; width: calc(var(--u) * 323); height: calc(var(--u) * 314);
   border: calc(var(--u) * 3) solid #ff47a8; border-radius: calc(var(--u) * 28);
@@ -63,9 +70,13 @@ body:has(.dash) { background: #161515; }
 
 .ov-center {
   position: absolute; box-sizing: border-box; left: calc(var(--u) * 396); top: calc(var(--u) * 157); width: calc(var(--u) * 1128); height: calc(var(--u) * 835);
-  border: calc(var(--u) * 4) solid #d9d9d9; background: #0a0a0a; padding: calc(var(--u) * 298) 0 0 calc(var(--u) * 152);
+  border: calc(var(--u) * 4) solid #d9d9d9; background: #0a0a0a; overflow: hidden;
 }
-.ov-center h2 { margin: 0; font-size: calc(var(--u) * 133); line-height: 1.4; font-weight: 700; }
+/* Two full-height panels stacked in a track; scrolling slides the track up/down while the side cards stay put. */
+.ov-track { height: 100%; transition: transform .7s cubic-bezier(.65, 0, .25, 1); }
+.ov-panel { box-sizing: border-box; height: 100%; padding: calc(var(--u) * 298) 0 0 calc(var(--u) * 152); }
+.ov-panel h2 { margin: 0; font-size: calc(var(--u) * 133); line-height: 1.4; font-weight: 700; }
+@media (prefers-reduced-motion: reduce) { .ov-track { transition: none; } }
 
 .ov-toggle { position: absolute; left: calc(var(--u) * 396); top: calc(var(--u) * 1016); display: flex; gap: calc(var(--u) * 34); }
 .ov-toggle button {
@@ -78,9 +89,9 @@ body:has(.dash) { background: #161515; }
 .ov-day { position: absolute; right: calc(var(--u) * 393); top: calc(var(--u) * 1011); margin: 0; font-size: calc(var(--u) * 56); line-height: 1; white-space: nowrap; }
 
 /* ---------- day pages ---------- */
-.day { position: relative; width: 100%; height: calc(var(--u) * 1100); }
-.sub { position: absolute; left: 0; top: calc(var(--u) * 112); width: 100%; height: calc(var(--u) * 81); box-sizing: border-box; background: #050505; border-bottom: calc(var(--u) * 3) solid #742e4d; }
-.subtabs { position: absolute; left: calc(var(--u) * 1024); top: 0; display: flex; align-items: center; gap: calc(var(--u) * 46); height: calc(var(--u) * 71); }
+.day { position: absolute; inset: 0; }
+.sub { position: absolute; left: calc(var(--ox) * -1); top: calc(var(--u) * 112); width: 100vw; height: calc(var(--u) * 81); box-sizing: border-box; background: #050505; border-bottom: calc(var(--u) * 3) solid #742e4d; }
+.subtabs { position: absolute; left: calc(var(--ox) + var(--u) * 1024); top: 0; display: flex; align-items: center; gap: calc(var(--u) * 46); height: calc(var(--u) * 71); }
 .subtabs a { position: relative; display: flex; align-items: center; justify-content: center; height: calc(var(--u) * 71); font-size: calc(var(--u) * 56); line-height: 1; }
 .subtabs a:first-child { width: calc(var(--u) * 277); }
 .subtabs a:first-child span, .subtabs a:first-child { font-size: calc(var(--u) * 55); }
@@ -88,7 +99,9 @@ body:has(.dash) { background: #161515; }
 .subtabs a.is-active { background: #ff47a8; border-radius: 0 0 calc(var(--u) * 24) calc(var(--u) * 24); }
 .day-empty { position: absolute; left: 0; right: 0; top: calc(var(--u) * 400); text-align: center; font-size: calc(var(--u) * 40); color: #6b6b6b; margin: 0; }
 
-.bp { position: absolute; left: calc(var(--u) * 4); top: calc(var(--u) * 197); width: calc(var(--u) * 1916); display: grid; grid-template-columns: calc(var(--u) * 906) calc(var(--u) * 1005); column-gap: calc(var(--u) * 5); }
+/* If panels are opened beyond the screen height, only this area scrolls. */
+.bp-scroll { position: absolute; left: 0; top: calc(var(--u) * 197); width: calc(var(--u) * 1920); bottom: 0; overflow-x: hidden; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #442249 transparent; }
+.bp { position: relative; margin-left: calc(var(--u) * 4); width: calc(var(--u) * 1916); display: grid; grid-template-columns: calc(var(--u) * 906) calc(var(--u) * 1005); column-gap: calc(var(--u) * 5); }
 .pn { display: flex; flex-direction: column; background: #161515; }
 .pn-h {
   display: flex; align-items: center; justify-content: space-between; width: 100%; height: calc(var(--u) * 92);
