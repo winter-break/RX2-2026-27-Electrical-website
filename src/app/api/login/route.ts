@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.redirect(new URL("/?error=1", req.url), 303);
   }
 
-  const res = NextResponse.redirect(new URL("/intro", req.url), 303);
+  const res = NextResponse.redirect(new URL("/overview", req.url), 303);
   res.cookies.set(AUTH_COOKIE, await tokenFor(real), {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
